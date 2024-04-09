@@ -25,9 +25,18 @@ export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 
 ### Check `makefile.in` and make changes if necessary
 
+The model requires the NetCDF4 library. If you are using Debian/Ubuntu, type the following commands in a terminal to make sure the Fortran compiler, NetCDF4, and MPI are installed properly:
+
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install gcc gfortran
+sudo apt install netcdf-bin libnetcdf-dev libnetcdff-dev
+sudo apt install openmpi-bin libopenmpi-dev
+```
+
 `makefile.in` details the configurations of the compiler and libraries. Check whether they fit you well.
 
-Pay attention to the `NETCDF_INC` and `NETCDF_LIB` variables. They specify the locations of the NetCDF development headers and runtime libraries, respectively. Make sure the NetCDF Fortran 90 header `netcdf.mod` can be found in `NETCDF_INC`, and the NetCDF Fortran library `libnetcdff.[so,dylib,dll]` and C library `libnetcdf.[so,dylib,dll]` can be found in `NETCDF_LIB` (the library suffix varies with platforms: `so` for Linux, `dylib` for Mac OS X, and `dll` for Windows). If not, locate them and edit the two variables' values accordingly. 
+Pay attention to the `NETCDF_INC` and `NETCDF_LIB` variables. They specify the locations of the NetCDF development headers and runtime libraries, respectively. Make sure the NetCDF Fortran 90 header `netcdf.mod` can be found in `NETCDF_INC`, and the NetCDF Fortran library `libnetcdff.[so,dylib,dll]` and C library `libnetcdf.[so,dylib,dll]` can be found in `NETCDF_LIB` (the library suffix varies with platforms: `so` for Linux, `dylib` for Mac OS X, and `dll` for Windows). If not, locate them and edit the two variables' values accordingly.
 
 ### Make
 
@@ -54,13 +63,13 @@ This repository adopts the Git Flow [<https://nvie.com/posts/a-successful-git-br
 
 Normally you should follow the instructions below.
 
-1. `git clone https://github.com/esmwg/ldas.git -o esmwg` to clone this repository. The `-o` flag sets `esmwg` as the remote name of this GitHub repository.
-2. Optionally, `git checkout -b develop esmwg/develop` to create a local `develop` branch that tracks the remote `develop` branch on GitHub. You may replace `develop` to `module-*` if it is the branch that you would like to base your work on. The same applies to the following instructions.
+1. `git clone https://github.com/riems/land.git` to clone this repository.
+2. Optionally, `git checkout -b develop origin/develop` to create a local `develop` branch that tracks the remote `develop` branch on GitHub. You may replace `develop` to `module-*` if it is the branch that you would like to base your work on. The same applies to the following instructions.
 3. `git checkout -b <your_own_branch> develop` to create your own branch based on the local `develop` branch.
 4. Edit and commit on your own branch.
-5. `git pull esmwg develop:develop` pulls the remote `develop` updates into the local `develop` branch. During your work, others may have pushed their work to the GitHub repository.
+5. `git pull origin develop:develop` pulls the remote `develop` updates into the local `develop` branch. During your work, others may have pushed their work to the GitHub repository.
 6. `git merge develop` merges the updates into your own branch.
-7. `git push eswmg <your_own_branch>:feature-<your_branch_on_GitHub>` pushes your work to a GitHub branch prefixed by "feature-". The "feature-" prefix is mandatory. It is also much easier to identify yourself in the branch name, such as "feature-zh-correct-a-bug".
+7. `git push origin <your_own_branch>:feature-<your_branch_on_GitHub>` pushes your work to a GitHub branch prefixed by "feature-". The "feature-" prefix is mandatory. It is also much easier to identify yourself in the branch name, such as "feature-zh-correct-a-bug".
 8. Open the GitHub website, create a Pull Request to merge your own branch into the `develop` branch or a `module-` branch.
 9. You can still edit your local branch after the Pull Request. Just push again will automatically update the Pull Request.
 10. If the Pull Request is accepted, delete your own branch using `git branch -d <your_own_branch>`. If the Pull Request is rebased or squashed remotely, you should force the deletion: `git branch -D <your_own_branch>`.
@@ -93,9 +102,9 @@ Edit "`makefile.in`", and append the compiler debug options "`-g`" to the fortra
 
 ## Example
 
-An example can be found in [<https://github.com/esmwg/land-val-suite>].
+An example can be found in [<https://github.com/riems/land-val-suite>].
 
-The example helps you run your first NoahMP simulation. Use the example as a template of your own simulations.
+The example helps you run your first NoahMP simulation. Use the example as a template for your own simulations.
 
 ## Porting
 
