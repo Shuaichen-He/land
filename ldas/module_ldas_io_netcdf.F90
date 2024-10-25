@@ -2203,7 +2203,7 @@ contains
 #ifdef WRFIO_NCD_LARGE_FILE_SUPPORT
        iret = nf_create(trim(output_flnm), IOR(NF_CLOBBER,NF_64BIT_OFFSET), ncid)
 #else
-       iret = nf90_create(trim(output_flnm), NF90_CLOBBER, ncid)
+       iret = nf90_create(trim(output_flnm), IOR(NF90_CLOBBER, NF90_NETCDF4), ncid)
 #endif
 #endif
        call error_handler(iret, failure="Problem nf90_create for "//trim(output_flnm))
@@ -2246,7 +2246,7 @@ contains
 ! Now define and describe our "Times" variable.
 !
 
-       iret = nf90_def_var(ncid,  "Times",  NF90_CHAR, (/dimid_datelen,dimid_times/), varid)
+       iret = nf90_def_var(ncid,  "Times",  NF90_CHAR, (/dimid_datelen,dimid_times/), varid,deflate_level=6)
        call error_handler(iret, failure="Problem nf90_def_var for "//trim(output_flnm))
 
        iret = nf90_enddef(ncid)
@@ -2470,7 +2470,7 @@ contains
     integer :: iret
     integer :: varid
 
-    iret = nf90_def_var(ncid,  varname,   itype, (/dimid_ix,dimid_jx,dimid_times/), varid)
+    iret = nf90_def_var(ncid,  varname,   itype, (/dimid_ix,dimid_jx,dimid_times/), varid,deflate_level=6)
     call error_handler(iret, "MAKE_VAR_ATT_2D: Failure defining variable "//trim(varname))
 
     iret = nf90_put_att(ncid, varid, "MemoryOrder", "XY ")
@@ -2504,7 +2504,7 @@ contains
     integer :: iret
     integer :: varid
 
-    iret = nf90_def_var(ncid,  varname, itype, (/dimid_ix,dimid_layers,dimid_jx,dimid_times/), varid)
+    iret = nf90_def_var(ncid,  varname, itype, (/dimid_ix,dimid_layers,dimid_jx,dimid_times/), varid,deflate_level=6)
     call error_handler(iret, "MAKE_VAR_ATT_3D:  Failure defining variable "//trim(varname))
 
     iret = nf90_put_att(ncid, varid, "MemoryOrder", "XZY")
@@ -2759,7 +2759,7 @@ contains
 #ifdef WRFIO_NCD_LARGE_FILE_SUPPORT
        ierr = nf_create(trim(output_flnm), IOR(NF_CLOBBER,NF_64BIT_OFFSET), ncid)
 #else
-    ierr = nf90_create(trim(output_flnm), NF90_CLOBBER, ncid)
+    ierr = nf90_create(trim(output_flnm), IOR(NF90_CLOBBER, NF90_NETCDF4), ncid)
 #endif
 #endif
 
@@ -2798,7 +2798,7 @@ contains
 ! Now define and describe all our NetCDF restart variables.
 !
 
-    ierr = nf90_def_var(ncid,  "Times",  NF90_CHAR, (/dimid_datelen,dimid_times/), varid)
+    ierr = nf90_def_var(ncid,  "Times",  NF90_CHAR, (/dimid_datelen,dimid_times/), varid,deflate_level=6)
     ierr = nf90_enddef(ncid)
 
 !
